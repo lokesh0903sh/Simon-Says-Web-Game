@@ -1,6 +1,22 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// Environment-based API URL configuration
+const getAPIBaseURL = () => {
+  // Check if we have a custom environment variable
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // Production detection
+  if (import.meta.env.PROD) {
+    return 'https://simon-says-game-server.vercel.app/api';
+  }
+  
+  // Development fallback
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getAPIBaseURL();
 
 // Create axios instance with default config
 const api = axios.create({
@@ -24,7 +40,7 @@ const getAuthToken = () => {
     
     return token;
   } catch (error) {
-    ;
+    console.error('Error getting auth token:', error);
     return null;
   }
 };
@@ -43,7 +59,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      ;
+      console.error('Authentication failed:', error.response.data);
       // Optionally redirect to login or clear auth state
     }
     return Promise.reject(error);

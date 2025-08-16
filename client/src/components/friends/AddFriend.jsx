@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UserPlus, Search } from 'lucide-react';
 import useFriendsStore from '../../store/friendsStore';
+import api from '../../utils/api';
 
 const AddFriend = () => {
   const [userId, setUserId] = useState('');
@@ -22,21 +23,16 @@ const AddFriend = () => {
     setSearchResult(null);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/friends/user/${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setSearchResult(userData.user);
+      const response = await api.get(`/friends/user/${userId}`);
+      
+      if (response.data) {
+        setSearchResult(response.data.user);
       } else {
-        const error = await response.json();
-        setSearchError(error.message || 'User not found');
+        setSearchError('User not found');
       }
     } catch (error) {
-      setSearchError('Failed to search for user');
+      console.error('Search error:', error);
+      setSearchError(error.response?.data?.message || 'Failed to search for user');
     } finally {
       setSearching(false);
     }

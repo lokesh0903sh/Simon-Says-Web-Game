@@ -1,6 +1,22 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Environment-based API URL configuration
+const getAPIBaseURL = () => {
+  // Check if we have a custom environment variable
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // Production detection
+  if (import.meta.env.PROD) {
+    return 'https://simon-says-game-server.vercel.app/api';
+  }
+  
+  // Development fallback
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getAPIBaseURL();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
