@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/simon-say
 
 async function removeDuplicateGameSessions() {
   try {
-    console.log('Starting duplicate removal process...');
+    ;
     
     // Find all game sessions and group by potential duplicate criteria
     const pipeline = [
@@ -34,28 +34,28 @@ async function removeDuplicateGameSessions() {
     ];
     
     const duplicateGroups = await GameSession.aggregate(pipeline);
-    console.log(`Found ${duplicateGroups.length} groups with duplicates`);
+    ;
     
     let totalRemoved = 0;
     let totalFixed = 0;
     
     for (const group of duplicateGroups) {
       const sessions = group.sessions;
-      console.log(`\nProcessing group with ${sessions.length} duplicates:`);
-      console.log(`- User: ${group._id.user || group._id.guestName}`);
-      console.log(`- Score: ${group._id.score}, Level: ${group._id.level}`);
+      ;
+      ;
+      ;
       
       // Keep the first session, remove the rest
       const sessionToKeep = sessions[0];
       const sessionsToRemove = sessions.slice(1);
       
-      console.log(`- Keeping session: ${sessionToKeep._id}`);
-      console.log(`- Removing ${sessionsToRemove.length} duplicates`);
+      ;
+      ;
       
       // Remove duplicate sessions
       for (const session of sessionsToRemove) {
         await GameSession.findByIdAndDelete(session._id);
-        console.log(`  - Removed session: ${session._id}`);
+        ;
         totalRemoved++;
       }
       
@@ -63,7 +63,7 @@ async function removeDuplicateGameSessions() {
       if (group._id.gameMode === 'registered' && group._id.user) {
         const user = await User.findById(group._id.user);
         if (user) {
-          console.log(`- Fixing user stats for: ${user.username}`);
+          ;
           
           // Recalculate user stats from remaining sessions
           const userSessions = await GameSession.find({ 
@@ -84,18 +84,18 @@ async function removeDuplicateGameSessions() {
           };
           
           await user.save();
-          console.log(`  - Updated stats: ${totalGames} games, highest: ${highestScore}`);
+          ;
           totalFixed++;
         }
       }
     }
     
-    console.log(`\n=== CLEANUP COMPLETE ===`);
-    console.log(`Total duplicate sessions removed: ${totalRemoved}`);
-    console.log(`Total users with fixed stats: ${totalFixed}`);
+    ;
+    ;
+    ;
     
   } catch (error) {
-    console.error('Error removing duplicates:', error);
+    ;
   } finally {
     mongoose.disconnect();
   }

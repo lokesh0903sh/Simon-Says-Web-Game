@@ -37,6 +37,7 @@ router.get('/stats/:userId', auth, async (req, res) => {
     }
 
     // Get user's game sessions to calculate detailed stats
+    ;
     const gameSessions = await GameSession.aggregate([
       { $match: { user: user._id } }, // Changed from userId to user
       {
@@ -49,6 +50,7 @@ router.get('/stats/:userId', auth, async (req, res) => {
         }
       }
     ]);
+    ;
 
     const stats = gameSessions[0] || {
       totalGames: 0,

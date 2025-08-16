@@ -81,7 +81,7 @@ const useAuthStore = create(
             user: { ...currentState.user, ...userData.user }
           }));
         } catch (error) {
-          console.error('Error refreshing user data:', error);
+          ;
         }
       }
     }),

@@ -11,7 +11,7 @@ import {
   ChevronDownIcon,
   UserGroupIcon,
   ArrowPathIcon,
-  ExternalLinkIcon
+  ArrowTopRightOnSquareIcon
 } from '@heroicons/react/24/outline';
 import { toast } from 'react-hot-toast';
 
@@ -325,7 +325,7 @@ const LeaderboardPage = () => {
                               ? `${entry.firstName || ''} ${entry.lastName || ''}`.trim()
                               : entry.username
                             }
-                            <ExternalLinkIcon className="w-3 h-3 opacity-60" />
+                            <ArrowTopRightOnSquareIcon className="w-3 h-3 opacity-60" />
                           </Link>
                         ) : (
                           <h3 className={`font-semibold text-sm sm:text-base truncate ${entry.isCurrentUser ? 'text-game-purple' : 'text-white'}`}>

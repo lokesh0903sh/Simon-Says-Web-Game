@@ -9,7 +9,7 @@ let level = 0;
 let h3 = document.querySelector("h3");
 document.addEventListener("keypress", function(){
     if(started == false){
-        console.log("game is started");
+        ;
         started = true;
         levelUp();
     }
@@ -39,7 +39,7 @@ function levelUp(){
     let randBtn = document.querySelector(`.${randColor}`);
 
     gameSeq.push(randColor);
-    console.log(gameSeq);
+    ;
     gameFlash(randBtn);
 }
 

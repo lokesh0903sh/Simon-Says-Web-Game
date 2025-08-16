@@ -24,7 +24,7 @@ const getAuthToken = () => {
     
     return token;
   } catch (error) {
-    console.error('Error getting auth token:', error);
+    ;
     return null;
   }
 };
@@ -43,7 +43,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.error('Authentication failed:', error.response.data);
+      ;
       // Optionally redirect to login or clear auth state
     }
     return Promise.reject(error);

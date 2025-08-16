@@ -102,7 +102,7 @@ router.get('/global', async (req, res) => {
       limit: parseInt(limit)
     });
   } catch (error) {
-    console.error('Get leaderboard error:', error);
+    ;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -122,7 +122,7 @@ router.get('/rank', auth, async (req, res) => {
       totalUsers: await User.countDocuments()
     });
   } catch (error) {
-    console.error('Get user rank error:', error);
+    ;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -249,7 +249,7 @@ router.get('/friends', auth, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Get friends leaderboard error:', error);
+    ;
     res.status(500).json({ message: 'Server error' });
   }
 });

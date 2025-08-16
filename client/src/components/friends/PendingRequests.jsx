@@ -14,7 +14,7 @@ const PendingRequests = () => {
     const result = await acceptFriendRequest(requestId);
     if (result.success) {
       // Optional: Show success toast
-      console.log(`Accepted friend request from ${username}`);
+      ;
     }
   };
 
@@ -22,7 +22,7 @@ const PendingRequests = () => {
     if (window.confirm(`Are you sure you want to decline the friend request from ${username}?`)) {
       const result = await declineFriendRequest(requestId);
       if (result.success) {
-        console.log(`Declined friend request from ${username}`);
+        ;
       }
     }
   };

@@ -65,7 +65,7 @@ export const formatDate = (dateInput, options = {}) => {
     
     return date.toLocaleDateString('en-US', { ...defaultOptions, ...options });
   } catch (error) {
-    console.error('Date formatting error:', error);
+    ;
     return 'Invalid Date';
   }
 };

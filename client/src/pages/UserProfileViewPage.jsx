@@ -50,19 +50,19 @@ const UserProfileViewPage = () => {
   const fetchUserProfile = async () => {
     setLoading(true);
     try {
-      console.log('Fetching profile for userId:', userId); // Debug log
+      ; // Debug log
       const [profileResponse, statsResponse] = await Promise.all([
         userAPI.getUserProfile(userId),
         userAPI.getUserStats(userId)
       ]);
       
-      console.log('Profile response:', profileResponse); // Debug log
-      console.log('Stats response:', statsResponse); // Debug log
+      ; // Debug log
+      ; // Debug log
       
       setProfileUser(profileResponse.user);
       setUserStats(statsResponse.stats);
     } catch (error) {
-      console.error('Error fetching user profile:', error);
+      ;
       toast.error('Failed to load user profile');
       navigate('/friends');
     } finally {
@@ -109,7 +109,7 @@ const UserProfileViewPage = () => {
           break;
       }
     } catch (error) {
-      console.error('Friend action error:', error);
+      ;
       toast.error('Failed to perform action');
     } finally {
       setActionLoading(false);

@@ -19,12 +19,7 @@ api.interceptors.request.use((config) => {
       
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log('Adding auth token to request:', token.substring(0, 10) + '...');
-      } else {
-        console.log('No token found in auth storage');
-      }
-    } else {
-      console.log('No auth storage found');
+      } 
     }
   } catch (error) {
     console.error('Error parsing auth token:', error);

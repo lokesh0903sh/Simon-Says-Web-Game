@@ -7,10 +7,10 @@ const router = express.Router();
 // Save game session
 router.post('/session', optionalAuth, async (req, res) => {
   try {
-    console.log('=== SAVING GAME SESSION ===');
-    console.log('Request body:', req.body);
-    console.log('User ID:', req.userId);
-    console.log('Game Mode:', req.body.gameMode);
+    ;
+    ;
+    ;
+    ;
     
     const {
       sessionId,
@@ -29,7 +29,7 @@ router.post('/session', optionalAuth, async (req, res) => {
     if (sessionId) {
       const existingSession = await GameSession.findOne({ sessionId });
       if (existingSession) {
-        console.log('Duplicate session detected, skipping save:', sessionId);
+        ;
         return res.status(409).json({ 
           success: false,
           message: 'Game session already saved',
@@ -79,35 +79,35 @@ router.post('/session', optionalAuth, async (req, res) => {
     });
 
     await gameSession.save();
-    console.log('Game session saved:', gameSession._id);
+    ;
 
     // Update user stats if registered user
     let updatedUser = null;
     if (gameMode === 'registered' && req.userId) {
-      console.log('Updating user stats for user:', req.userId);
+      ;
       const user = await User.findById(req.userId);
       if (user) {
-        console.log('User found, current stats:', user.gameStats);
+        ;
         
         user.gameStats.totalGamesPlayed += 1;
         user.gameStats.totalScore += score;
         
         if (score > user.gameStats.highestScore) {
           user.gameStats.highestScore = score;
-          console.log('New high score:', score);
+          ;
         }
         
         user.updateAverageScore();
         await user.save();
         updatedUser = user;
         
-        console.log('Updated user stats:', user.gameStats);
+        ;
       } else {
-        console.log('User not found with ID:', req.userId);
+        ;
       }
     }
 
-    console.log('Sending response with updated user:', updatedUser ? 'Yes' : 'No');
+    ;
 
     res.status(201).json({
       message: 'Game session saved successfully',
@@ -120,7 +120,7 @@ router.post('/session', optionalAuth, async (req, res) => {
       } : null
     });
   } catch (error) {
-    console.error('Save game session error:', error);
+    ;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -144,7 +144,7 @@ router.get('/history', auth, async (req, res) => {
       total
     });
   } catch (error) {
-    console.error('Get game history error:', error);
+    ;
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -173,7 +173,7 @@ router.get('/stats', auth, async (req, res) => {
 
     res.json(stats);
   } catch (error) {
-    console.error('Get game stats error:', error);
+    ;
     res.status(500).json({ message: 'Server error' });
   }
 });

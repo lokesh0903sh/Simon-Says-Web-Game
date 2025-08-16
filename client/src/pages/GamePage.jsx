@@ -89,9 +89,9 @@ const GamePage = () => {
   // Handle navigation to GamePage (e.g., from dashboard "Play Game" button)
   useEffect(() => {
     // If user navigates to GamePage from another route, ensure fresh start
-    console.log('Location changed, resetting game state for fresh start');
-    console.log('Current modal states:', { showGameOverModal, showModeModal });
-    console.log('Current game state:', { started, gameOver, gameSeqLength: gameSeq.length });
+    ;
+    ;
+    ;
     
     resetGame();
     setShowGameOverModal(false);
@@ -101,7 +101,7 @@ const GamePage = () => {
     // Small delay then show mode selection if not already started
     setTimeout(() => {
       if (!started && !gameOver && gameSeq.length === 0) {
-        console.log('Showing mode modal after location change');
+        ;
         setShowModeModal(true);
       }
     }, 100);
@@ -265,7 +265,7 @@ const GamePage = () => {
     
     if (!isCorrect) {
       // Game Over - useEffect will handle saving and notifications
-      console.log('Game over triggered');
+      ;
     } else if (willCompleteSequence) {
       // User completed the sequence correctly - Level complete!
       toast.success(`Level ${level} Complete! Great memory! 🧠`, {
@@ -283,7 +283,7 @@ const GamePage = () => {
     gameSessionSaved.current = false; // Reset save flag
     gameSessionId.current = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`; // Generate unique session ID
     
-    console.log('Starting new game with mode:', mode, 'name:', name, 'sessionId:', gameSessionId.current);
+    ;
     
     // Set game mode and start
     setGameMode(mode, name);
@@ -305,7 +305,7 @@ const GamePage = () => {
     gameSessionSaved.current = false; // Reset save flag
     gameSessionId.current = null; // Reset session ID
     
-    console.log('Restarting game - showing mode selection');
+    ;
     
     // Small delay then show mode selection
     setTimeout(() => {
@@ -316,34 +316,34 @@ const GamePage = () => {
   const saveGameSession = async () => {
     // Prevent duplicate saves
     if (gameSessionSaved.current) {
-      console.log('Game session already saved, skipping duplicate save');
+      ;
       return;
     }
     
     gameSessionSaved.current = true;
     
-    console.log('=== SAVING GAME SESSION - FRONTEND ===');
-    console.log('Game mode:', gameMode);
-    console.log('Guest name:', guestName);
-    console.log('Is authenticated:', isAuthenticated);
-    console.log('User:', user);
-    console.log('Score:', score);
-    console.log('Level:', level);
+    ;
+    ;
+    ;
+    ;
+    ;
+    ;
+    ;
     
     // Determine correct game mode based on authentication
     let actualGameMode = gameMode;
     if (isAuthenticated && user) {
       actualGameMode = 'registered';
-      console.log('User is authenticated, setting gameMode to registered');
+      ;
     } else if (!actualGameMode || actualGameMode === null) {
       actualGameMode = 'guest';
-      console.log('No gameMode set, defaulting to guest');
+      ;
     }
     
-    console.log('Final gameMode to send:', actualGameMode);
+    ;
     
     if (actualGameMode === 'guest' && !guestName) {
-      console.log('Guest mode but no guest name, skipping save');
+      ;
       return;
     }
     
@@ -361,20 +361,20 @@ const GamePage = () => {
         totalMoves
       };
       
-      console.log('Game data to send:', gameData);
+      ;
       
       const response = await gameAPI.saveGameSession(gameData);
-      console.log('Response from server:', response);
+      ;
       
       // Handle duplicate session response
       if (response.success === false && response.message === 'Game session already saved') {
-        console.log('Game session was already saved, skipping duplicate');
+        ;
         return;
       }
       
       // Update user stats in auth store if user data is returned
       if (response.user && isAuthenticated) {
-        console.log('Updating user data in auth store');
+        ;
         const { updateUser } = useAuthStore.getState();
         updateUser(response.user);
         toast.success(`Game saved! New high score: ${response.user.gameStats.highestScore}`);
@@ -382,7 +382,7 @@ const GamePage = () => {
         toast.success('Game session saved!');
       }
     } catch (error) {
-      console.error('Error saving game session:', error);
+      ;
       toast.error('Failed to save game session');
     }
   };
