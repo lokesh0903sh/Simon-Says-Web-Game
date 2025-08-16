@@ -1,7 +1,93 @@
 const express = require('express');
 const User = require('../models/User');
+const GameSession = require('../models/GameSession');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
+
+// Get user profile by ID (for viewing other users)
+router.get('/profile/:userId', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      user: {
+        _id: user._id,
+        id: user._id,
+        userId: user.userId,
+        username: user.username,
+        profile: user.profile,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (error) {
+    console.error('Get user profile error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get user stats by ID
+router.get('/stats/:userId', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Get user's game sessions to calculate detailed stats
+    const gameSessions = await GameSession.aggregate([
+      { $match: { user: user._id } }, // Changed from userId to user
+      {
+        $group: {
+          _id: null,
+          totalGames: { $sum: 1 },
+          highestScore: { $max: '$score' },
+          averageScore: { $avg: '$score' },
+          totalAccuracy: { $avg: '$accuracy' }
+        }
+      }
+    ]);
+
+    const stats = gameSessions[0] || {
+      totalGames: 0,
+      highestScore: 0,
+      averageScore: 0,
+      totalAccuracy: 0
+    };
+
+    // Get user's rank - simplified approach
+    const allUserStats = await GameSession.aggregate([
+      { $match: { gameMode: 'registered' } }, // Only registered users
+      {
+        $group: {
+          _id: '$user',
+          highestScore: { $max: '$score' }
+        }
+      },
+      { $sort: { highestScore: -1 } }
+    ]);
+
+    const userRankIndex = allUserStats.findIndex(userStat => 
+      userStat._id.toString() === user._id.toString()
+    );
+    const rank = userRankIndex !== -1 ? userRankIndex + 1 : null;
+
+    res.json({
+      stats: {
+        totalGames: stats.totalGames,
+        highestScore: stats.highestScore,
+        averageScore: Math.round(stats.averageScore || 0),
+        totalAccuracy: Math.round(stats.totalAccuracy || 0),
+        rank
+      }
+    });
+  } catch (error) {
+    console.error('Get user stats error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // Get user profile
 router.get('/profile', auth, async (req, res) => {

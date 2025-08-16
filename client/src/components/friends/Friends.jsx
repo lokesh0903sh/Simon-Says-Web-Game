@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Users, UserPlus, Clock, Share2, Trophy } from 'lucide-react';
+import { Users, UserPlus, Clock, Share2, Trophy, Home, ArrowLeft } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import useFriendsStore from '../../store/friendsStore';
 import useAuthStore from '../../store/authStore';
 import FriendsList from './FriendsList';
@@ -12,6 +13,7 @@ const Friends = () => {
   const [showShareModal, setShowShareModal] = useState(false);
   const [inviteLink, setInviteLink] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
+  const navigate = useNavigate();
 
   const { user } = useAuthStore();
   const {
@@ -74,6 +76,45 @@ const Friends = () => {
   return (
     <div className="min-h-screen bg-gray-900 py-4 px-4 sm:py-8">
       <div className="max-w-6xl mx-auto">
+        {/* Navigation Header */}
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
+              title="Go Back"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <Link
+              to="/dashboard"
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
+              title="Dashboard"
+            >
+              <Home className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Link>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Link
+              to="/leaderboard"
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
+              title="Global Leaderboard"
+            >
+              <Trophy className="w-4 h-4 sm:w-5 sm:h-5" />
+            </Link>
+            <Link
+              to="/settings"
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
+              title="Settings"
+            >
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
           <div className="text-center sm:text-left">

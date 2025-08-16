@@ -10,7 +10,8 @@ import {
   CalendarIcon,
   ChevronDownIcon,
   UserGroupIcon,
-  ArrowPathIcon
+  ArrowPathIcon,
+  ExternalLinkIcon
 } from '@heroicons/react/24/outline';
 import { toast } from 'react-hot-toast';
 
@@ -166,32 +167,32 @@ const LeaderboardPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="card mb-6 bg-gradient-to-r from-game-purple/10 to-game-green/10 border-game-purple"
+            className="card mb-4 sm:mb-6 bg-gradient-to-r from-game-purple/10 to-game-green/10 border-game-purple"
           >
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
-              <UserIcon className="h-6 w-6 mr-2" />
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4 flex items-center">
+              <UserIcon className="h-5 w-5 sm:h-6 sm:w-6 mr-2" />
               Your Ranking
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-game-purple">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div className="text-center p-3 sm:p-0">
+                <p className="text-xl sm:text-2xl font-bold text-game-purple">
                   {getRankIcon(userRank.rank)}
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-xs sm:text-sm">
                   {userRank.rank}{getRankSuffix(userRank.rank)} place
                 </p>
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-game-green">
+              <div className="text-center p-3 sm:p-0">
+                <p className="text-xl sm:text-2xl font-bold text-game-green">
                   {formatScore(userRank?.highestScore || 0)}
                 </p>
-                <p className="text-gray-400 text-sm">High Score</p>
+                <p className="text-gray-400 text-xs sm:text-sm">High Score</p>
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-game-yellow">
+              <div className="text-center p-3 sm:p-0">
+                <p className="text-xl sm:text-2xl font-bold text-game-yellow">
                   {userRank.totalUsers}
                 </p>
-                <p className="text-gray-400 text-sm">Total Players</p>
+                <p className="text-gray-400 text-xs sm:text-sm">Total Players</p>
               </div>
             </div>
           </motion.div>
@@ -202,38 +203,38 @@ const LeaderboardPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0"
+          className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 space-y-3 sm:space-y-0"
         >
           {/* Tabs */}
-          <div className="flex space-x-2 p-1 bg-dark-card rounded-lg border border-dark-border">
+          <div className="flex space-x-1 sm:space-x-2 p-1 bg-dark-card rounded-lg border border-dark-border w-full sm:w-auto">
             {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex items-center space-x-2 ${
+                  className={`px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all flex items-center space-x-1 sm:space-x-2 flex-1 sm:flex-none justify-center ${
                     activeTab === tab.key
                       ? 'bg-game-purple text-white shadow-game'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />
-                  <span>{tab.label}</span>
+                  <span className="hidden xs:inline">{tab.label}</span>
                 </button>
               );
             })}
           </div>
 
           {/* Period Selector */}
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <button
               onClick={() => setShowPeriodDropdown(!showPeriodDropdown)}
-              className="btn-game btn-secondary flex items-center space-x-2"
+              className="btn-game btn-secondary flex items-center justify-center space-x-2 w-full sm:w-auto text-xs sm:text-sm"
             >
-              <CalendarIcon className="h-5 w-5" />
-              <span>{periods.find(p => p.key === activePeriod)?.label}</span>
-              <ChevronDownIcon className={`h-4 w-4 transition-transform ${showPeriodDropdown ? 'rotate-180' : ''}`} />
+              <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="truncate">{periods.find(p => p.key === activePeriod)?.label}</span>
+              <ChevronDownIcon className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${showPeriodDropdown ? 'rotate-180' : ''}`} />
             </button>
 
             <AnimatePresence>
@@ -242,7 +243,7 @@ const LeaderboardPage = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute right-0 mt-2 w-48 bg-dark-card border border-dark-border rounded-lg shadow-xl z-10"
+                  className="absolute right-0 mt-2 w-full sm:w-48 bg-dark-card border border-dark-border rounded-lg shadow-xl z-10"
                 >
                   {periods.map((period) => (
                     <button
@@ -251,11 +252,11 @@ const LeaderboardPage = () => {
                         setActivePeriod(period.key);
                         setShowPeriodDropdown(false);
                       }}
-                      className={`w-full px-4 py-3 text-left hover:bg-dark-border transition-colors flex items-center space-x-3 ${
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-dark-border transition-colors flex items-center space-x-2 sm:space-x-3 text-sm ${
                         activePeriod === period.key ? 'text-game-purple' : 'text-gray-300'
                       }`}
                     >
-                      <span className="text-lg">{period.icon}</span>
+                      <span className="text-base sm:text-lg">{period.icon}</span>
                       <span>{period.label}</span>
                     </button>
                   ))}
@@ -289,23 +290,23 @@ const LeaderboardPage = () => {
               </p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {leaderboardData.map((entry, index) => (
                 <motion.div
                   key={entry._id || index}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`leaderboard-entry p-4 rounded-xl border ${
+                  className={`leaderboard-entry p-3 sm:p-4 rounded-xl border ${
                     entry.isCurrentUser 
                       ? 'border-game-purple bg-game-purple/10' 
                       : 'border-dark-border bg-dark-border/50'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
                       {/* Rank */}
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold ${
+                      <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-xs sm:text-base ${
                         entry.rank <= 3 
                           ? 'bg-gradient-to-br from-game-yellow to-game-red text-white' 
                           : 'bg-dark-card text-gray-400'
@@ -314,30 +315,43 @@ const LeaderboardPage = () => {
                       </div>
 
                       {/* User Info */}
-                      <div>
-                        <h3 className={`font-semibold ${entry.isCurrentUser ? 'text-game-purple' : 'text-white'}`}>
-                          {entry.firstName || entry.lastName 
-                            ? `${entry.firstName || ''} ${entry.lastName || ''}`.trim()
-                            : entry.username
-                          }
-                          {entry.isCurrentUser && (
-                            <span className="text-xs ml-2 bg-game-purple text-white px-2 py-1 rounded-full">
-                              You
-                            </span>
-                          )}
-                        </h3>
-                        <p className="text-sm text-gray-400">@{entry.username}</p>
+                      <div className="min-w-0 flex-1">
+                        {!entry.isCurrentUser ? (
+                          <Link 
+                            to={`/user/${entry._id}`}
+                            className={`font-semibold text-sm sm:text-base truncate hover:text-game-blue transition-colors flex items-center gap-1 ${entry.isCurrentUser ? 'text-game-purple' : 'text-white'}`}
+                          >
+                            {entry.firstName || entry.lastName 
+                              ? `${entry.firstName || ''} ${entry.lastName || ''}`.trim()
+                              : entry.username
+                            }
+                            <ExternalLinkIcon className="w-3 h-3 opacity-60" />
+                          </Link>
+                        ) : (
+                          <h3 className={`font-semibold text-sm sm:text-base truncate ${entry.isCurrentUser ? 'text-game-purple' : 'text-white'}`}>
+                            {entry.firstName || entry.lastName 
+                              ? `${entry.firstName || ''} ${entry.lastName || ''}`.trim()
+                              : entry.username
+                            }
+                            {entry.isCurrentUser && (
+                              <span className="text-xs ml-2 bg-game-purple text-white px-2 py-1 rounded-full hidden sm:inline">
+                                You
+                              </span>
+                            )}
+                          </h3>
+                        )}
+                        <p className="text-xs sm:text-sm text-gray-400 truncate">@{entry.username}</p>
                       </div>
                     </div>
 
                     {/* Stats */}
-                    <div className="text-right space-y-1">
-                      <p className={`text-lg font-bold ${getScoreColor(entry.rank)}`}>
+                    <div className="text-right space-y-1 flex-shrink-0">
+                      <p className={`text-base sm:text-lg font-bold ${getScoreColor(entry.rank)}`}>
                         {formatScore(entry?.highestScore || 0)}
                       </p>
-                      <div className="flex space-x-4 text-xs text-gray-400">
+                      <div className="flex flex-col sm:flex-row sm:space-x-4 text-xs text-gray-400">
                         <span>{entry?.totalGames || 0} games</span>
-                        <span>{entry?.averageAccuracy || 0}% avg</span>
+                        <span className="hidden sm:inline">{entry?.averageAccuracy || 0}% avg</span>
                       </div>
                     </div>
                   </div>
@@ -353,14 +367,14 @@ const LeaderboardPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="card mt-6 text-center bg-gradient-to-r from-game-purple/20 to-game-green/20 border-game-purple"
+            className="card mt-4 sm:mt-6 text-center bg-gradient-to-r from-game-purple/20 to-game-green/20 border-game-purple"
           >
-            <UsersIcon className="h-12 w-12 text-game-purple mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">Join the Competition!</h3>
-            <p className="text-gray-400 mb-6">
+            <UsersIcon className="h-10 w-10 sm:h-12 sm:w-12 text-game-purple mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Join the Competition!</h3>
+            <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">
               Create an account to save your scores and compete with players worldwide.
             </p>
-            <div className="space-x-4">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 justify-center">
               <Link to="/register" className="btn-game btn-primary">
                 Sign Up
               </Link>

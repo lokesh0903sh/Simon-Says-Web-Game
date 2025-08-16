@@ -11,6 +11,7 @@ import DashboardPage from './pages/DashboardPage';
 import GamePage from './pages/GamePage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import ProfilePage from './pages/ProfilePage';
+import UserProfileViewPage from './pages/UserProfileViewPage';
 import SettingsPage from './pages/SettingsPage';
 
 // Friends Components
@@ -64,6 +65,11 @@ function App() {
               <Route path="/profile" element={
                 <ProtectedRoute>
                   <ProfilePage />
+                </ProtectedRoute>
+              } />
+              <Route path="/user/:userId" element={
+                <ProtectedRoute>
+                  <UserProfileViewPage />
                 </ProtectedRoute>
               } />
               <Route path="/settings" element={

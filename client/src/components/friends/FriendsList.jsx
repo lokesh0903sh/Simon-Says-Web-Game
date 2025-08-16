@@ -1,5 +1,6 @@
 import React from 'react';
-import { UserX, MessageCircle, Trophy, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { UserX, MessageCircle, Trophy, Users, ExternalLink } from 'lucide-react';
 import useFriendsStore from '../../store/friendsStore';
 
 const FriendsList = () => {
@@ -49,7 +50,13 @@ const FriendsList = () => {
                 {friend.username.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-semibold text-sm sm:text-base truncate">{friend.username}</h3>
+                <Link 
+                  to={`/user/${friend._id}`}
+                  className="text-white font-semibold text-sm sm:text-base truncate hover:text-blue-400 transition-colors flex items-center gap-2"
+                >
+                  {friend.username}
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </Link>
                 <p className="text-gray-400 text-xs sm:text-sm truncate">ID: {friend.userId}</p>
                 {friend.gameStats && (
                   <div className="flex items-center gap-3 sm:gap-4 mt-1">
@@ -66,6 +73,13 @@ const FriendsList = () => {
             </div>
             
             <div className="flex items-center justify-end space-x-2 sm:space-x-2">
+              <Link
+                to={`/user/${friend._id}`}
+                className="p-2 text-gray-400 hover:text-green-400 rounded-lg hover:bg-gray-600 transition-colors"
+                title="View Profile"
+              >
+                <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
+              </Link>
               <button
                 className="p-2 text-gray-400 hover:text-blue-400 rounded-lg hover:bg-gray-600 transition-colors"
                 title="Send Message (Coming Soon)"

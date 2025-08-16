@@ -23,6 +23,16 @@ export const userAPI = {
     return response.data;
   },
 
+  getUserProfile: async (userId) => {
+    const response = await api.get(`/user/profile/${userId}`);
+    return response.data;
+  },
+
+  getUserStats: async (userId) => {
+    const response = await api.get(`/user/stats/${userId}`);
+    return response.data;
+  },
+
   updateProfile: async (profileData) => {
     const response = await api.put('/user/profile', profileData);
     return response.data;
@@ -74,6 +84,53 @@ export const leaderboardAPI = {
 
   getUserRank: async () => {
     const response = await api.get('/leaderboard/rank');
+    return response.data;
+  }
+};
+
+export const friendsAPI = {
+  getFriends: async () => {
+    const response = await api.get('/friends');
+    return response.data;
+  },
+
+  getPendingRequests: async () => {
+    const response = await api.get('/friends/pending');
+    return response.data;
+  },
+
+  getSentRequests: async () => {
+    const response = await api.get('/friends/sent');
+    return response.data;
+  },
+
+  sendFriendRequest: async (userId) => {
+    const response = await api.post('/friends/request', { userId });
+    return response.data;
+  },
+
+  acceptFriendRequest: async (requestId) => {
+    const response = await api.post(`/friends/accept/${requestId}`);
+    return response.data;
+  },
+
+  declineFriendRequest: async (requestId) => {
+    const response = await api.post(`/friends/decline/${requestId}`);
+    return response.data;
+  },
+
+  removeFriend: async (friendshipId) => {
+    const response = await api.delete(`/friends/${friendshipId}`);
+    return response.data;
+  },
+
+  generateInvitationLink: async () => {
+    const response = await api.post('/friends/invite-link');
+    return response.data;
+  },
+
+  getFriendsLeaderboard: async (period = 'all', page = 1, limit = 50) => {
+    const response = await api.get(`/leaderboard/friends?period=${period}&page=${page}&limit=${limit}`);
     return response.data;
   }
 };
